@@ -33,8 +33,9 @@ libdir = get_config_var('LIBDIR') or ''
 
 have_np='NO'
 try:
-    from numpy.distutils.misc_util import get_numpy_include_dirs
-    incdirs = get_numpy_include_dirs()+incdirs
+    from numpy import get_include
+    numpy_dir = [get_include()]
+    incdirs = numpy_dir+incdirs
     have_np='YES'
 except ImportError:
     pass
