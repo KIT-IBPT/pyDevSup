@@ -26,9 +26,9 @@ else:
         pass
     out = open(sys.argv[1], 'w')
 
-from distutils.sysconfig import get_config_var, get_python_inc
+from sysconfig import get_config_var, get_path, get_python_version
 
-incdirs = [get_python_inc()]
+incdirs = [get_path("include")]
 libdir = get_config_var('LIBDIR') or ''
 
 have_np='NO'
@@ -42,10 +42,10 @@ except ImportError:
 print('TARGET_CFLAGS +=',get_config_var('BASECFLAGS'), file=out)
 print('TARGET_CXXFLAGS +=',get_config_var('BASECFLAGS'), file=out)
 
-print('PY_VER :=',get_config_var('VERSION'), file=out)
+print('PY_VER :=',get_python_version(), file=out)
 ldver = get_config_var('LDVERSION')
 if ldver is None:
-    ldver = get_config_var('VERSION')
+    ldver = get_python_version()
     if get_config_var('Py_DEBUG'):
         ldver = ldver+'_d'
 print('PY_LD_VER :=',ldver, file=out)
